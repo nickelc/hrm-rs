@@ -1,6 +1,8 @@
 [package]
 name = "hrm"
 version = "0.1.0"
+description = "Run Human Resource Machine programs"
+license = "GPL-3.0-or-later"
 authors = ["Constantin Nickel <constantin.nickel@gmail.com>"]
 
 [dependencies]
