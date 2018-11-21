@@ -62,10 +62,16 @@ fn main() {
     let stdin = io::stdin();
     let mut input = stdin.lock();
     let mut buf = String::new();
-    input
-        .read_to_string(&mut buf)
-        .expect("failed to read stdin");
+    if let Err(_) = input.read_to_string(&mut buf) {
+        eprintln!("Failed to read program from stdin");
+        std::process::exit(1);
+    }
 
-    let output = Cpu::new(&buf, mem, inbox).run().expect("program failed");
-    println!("Output: {:?}", output);
+    match Cpu::new(&buf, mem, inbox).run() {
+        Ok(outbox) => println!("Outbox: {:?}", outbox),
+        Err(err) => {
+            eprintln!("Program failed with: {}", err);
+            std::process::exit(1);
+        }
+    }
 }
