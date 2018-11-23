@@ -52,3 +52,10 @@ JUMP a
 ```text
 hrm 1 2 3 4 5 - 0:3 < example.asm
 ```
+
+## Related Projects
+
+- [Javascript parser](https://github.com/nrkn/hrm-parser)
+- [Javascript runtime](https://github.com/nrkn/hrm-cpu)
+- [Level data](https://github.com/atesgoral/hrm-level-data)
+- [Solutions and speed/size hacks, exploits](https://github.com/atesgoral/hrm-solutions)
