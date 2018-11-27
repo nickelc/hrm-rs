@@ -74,8 +74,8 @@ impl Cpu {
             Addr::Direct(i) => Ok(*i),
             Addr::Ref(i) => match self.state.memory.get(i) {
                 Some(Data::Number(n)) => Ok(*n as usize),
-                Some(Data::Char(_)) => return error::bad_address(*i),
-                None => return error::empty_tile(*i),
+                Some(Data::Char(_)) => error::bad_address(*i),
+                None => error::empty_tile(*i),
             },
         }
     }

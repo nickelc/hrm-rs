@@ -17,8 +17,8 @@ fn main() {
     let mut mem = Memory::new();
 
     let mut is_mem = false;
-    let mut it = env::args().skip(1);
-    while let Some(arg) = it.next() {
+    let it = env::args().skip(1);
+    for arg in it {
         match arg.parse().map(Data::Number) {
             Ok(n) => inbox.push(n),
             Err(_) => {
@@ -34,7 +34,7 @@ fn main() {
                             .map(Data::Char),
                     );
                 } else {
-                    let mut it = arg.split(":");
+                    let mut it = arg.split(':');
                     if let Some(Ok(tile)) = it.next().map(|s| s.parse()) {
                         if let Some(data) = it.next() {
                             match data.parse().map(Data::Number) {
@@ -62,7 +62,7 @@ fn main() {
     let stdin = io::stdin();
     let mut input = stdin.lock();
     let mut buf = String::new();
-    if let Err(_) = input.read_to_string(&mut buf) {
+    if input.read_to_string(&mut buf).is_err() {
         eprintln!("Failed to read program from stdin");
         std::process::exit(1);
     }
