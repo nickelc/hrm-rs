@@ -13,7 +13,7 @@ pub enum RuntimeError {
 }
 
 impl fmt::Display for RuntimeError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         use self::RuntimeError::*;
         match *self {
             BadTileAddress(tile) => write!(f, "Bad tile address: {}", tile),

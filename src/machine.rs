@@ -16,7 +16,7 @@ pub enum Data {
 }
 
 impl fmt::Debug for Data {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match *self {
             Data::Number(n) => n.fmt(f),
             Data::Char(c) => c.fmt(f),

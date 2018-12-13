@@ -81,11 +81,11 @@ pub fn parse(input: &str) -> Vec<Instr> {
     })
 }
 
-named!(parse_tokens<CompleteStr, Vec<Token>>,
+named!(parse_tokens<CompleteStr<'_>, Vec<Token<'_>>>,
     preceded!(hrm_sep, tokens)
 );
 
-named!(doc_comment<CompleteStr, CompleteStr>,
+named!(doc_comment<CompleteStr<'_>, CompleteStr<'_>>,
     recognize!(
         tuple!(
             tag!("--"),
@@ -94,7 +94,7 @@ named!(doc_comment<CompleteStr, CompleteStr>,
     )
 );
 
-named!(hrm_sep<CompleteStr, CompleteStr>,
+named!(hrm_sep<CompleteStr<'_>, CompleteStr<'_>>,
     recognize!(
         many0!(
             alt!(multispace | doc_comment)
@@ -102,7 +102,7 @@ named!(hrm_sep<CompleteStr, CompleteStr>,
     )
 );
 
-named!(comment<CompleteStr, CompleteStr>,
+named!(comment<CompleteStr<'_>, CompleteStr<'_>>,
     recognize!(
         many0!(
             tuple!(
@@ -115,7 +115,7 @@ named!(comment<CompleteStr, CompleteStr>,
     )
 );
 
-named!(tokens<CompleteStr, Vec<Token>>,
+named!(tokens<CompleteStr<'_>, Vec<Token<'_>>>,
     many0!(
         alt!(
             preceded!(comment, ws!(label)) |
@@ -128,7 +128,7 @@ named!(tokens<CompleteStr, Vec<Token>>,
     )
 );
 
-named!(label<CompleteStr, Token>,
+named!(label<CompleteStr<'_>, Token<'_>>,
     map!(
         do_parse!(
             name: take_while!(|c| is_alphanumeric(c as u8)) >>
@@ -139,7 +139,7 @@ named!(label<CompleteStr, Token>,
     )
 );
 
-named!(inoutbox<CompleteStr, Token>,
+named!(inoutbox<CompleteStr<'_>, Token<'_>>,
     do_parse!(
         inst: alt!(
             value!(Token::Inbox, tag!("INBOX")) |
@@ -149,7 +149,7 @@ named!(inoutbox<CompleteStr, Token>,
     )
 );
 
-named!(addr<CompleteStr, Addr>,
+named!(addr<CompleteStr<'_>, Addr>,
     alt!(
         do_parse!(
             v: map_res!(digit, to_usize) >>
@@ -164,7 +164,7 @@ named!(addr<CompleteStr, Addr>,
     )
 );
 
-named!(jump<CompleteStr, Token>,
+named!(jump<CompleteStr<'_>, Token<'_>>,
     map!(
         do_parse!(
             tag!("JUMP") >>
@@ -176,7 +176,7 @@ named!(jump<CompleteStr, Token>,
     )
 );
 
-named!(jumpn<CompleteStr, Token>,
+named!(jumpn<CompleteStr<'_>, Token<'_>>,
     map!(
         do_parse!(
             tag!("JUMPN") >>
@@ -188,7 +188,7 @@ named!(jumpn<CompleteStr, Token>,
     )
 );
 
-named!(jumpz<CompleteStr, Token>,
+named!(jumpz<CompleteStr<'_>, Token<'_>>,
     map!(
         do_parse!(
             tag!("JUMPZ") >>
@@ -202,7 +202,7 @@ named!(jumpz<CompleteStr, Token>,
 
 macro_rules! impl_token(
     ($func:ident, $token:ident, $tag:expr) => (
-        named!($func<CompleteStr, Token>,
+        named!($func<CompleteStr<'_>, Token<'_>>,
             do_parse!(
                 tag!($tag) >>
                 space >>
@@ -220,7 +220,7 @@ impl_token!(copy_from, CopyFrom, "COPYFROM");
 impl_token!(bump_up, BumpUp, "BUMPUP");
 impl_token!(bump_down, BumpDown, "BUMPDN");
 
-fn to_usize(input: CompleteStr) -> Result<usize, ()> {
+fn to_usize(input: CompleteStr<'_>) -> Result<usize, ()> {
     use std::str::FromStr;
     match FromStr::from_str(input.0) {
         Err(_) => Err(()),

@@ -31,7 +31,7 @@ impl Instr {
 }
 
 impl fmt::Debug for Instr {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match *self {
             Instr::Inbox => write!(f, "INBOX"),
             Instr::Outbox => write!(f, "OUTBOX"),
