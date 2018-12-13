@@ -10,7 +10,7 @@ mod machine;
 mod op;
 mod parser;
 
-use machine::{Cpu, Data, Memory};
+use crate::machine::{Cpu, Data, Memory};
 
 fn main() {
     let mut inbox = vec![];

@@ -3,7 +3,7 @@ use std::collections::BTreeMap;
 use nom::types::CompleteStr;
 use nom::{digit, is_alphanumeric, is_digit, multispace, space};
 
-use op::{Addr, Instr};
+use crate::op::{Addr, Instr};
 
 #[derive(Debug, PartialEq)]
 enum Token<'a> {

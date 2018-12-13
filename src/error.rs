@@ -1,6 +1,6 @@
 use std::fmt;
 
-use machine::Tile;
+use crate::machine::Tile;
 
 pub type Result<T> = std::result::Result<T, RuntimeError>;
 

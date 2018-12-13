@@ -2,9 +2,9 @@ use std::char;
 use std::collections::BTreeMap;
 use std::fmt;
 
-use error::{self, Result, RuntimeError::*};
-use op::{Addr, Instr};
-use parser::parse;
+use crate::error::{self, Result, RuntimeError::*};
+use crate::op::{Addr, Instr};
+use crate::parser::parse;
 
 pub type Tile = usize;
 pub type Memory = BTreeMap<Tile, Data>;
